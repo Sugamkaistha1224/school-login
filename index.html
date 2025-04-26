@@ -1,0 +1,721 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+	/* Basic Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fb;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+/* General container styles */
+#portal-selection, #teacher-login, #student-login, #teacher-dashboard, #student-dashboard {
+    max-width: 800px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+/* Portal Selection */
+#portal-selection {
+    text-align: center;
+}
+
+#portal-selection h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: 600;
+}
+
+#portal-selection button {
+    font-size: 18px;
+    padding: 14px 28px;
+    background: #4CAF50;
+    border: none;
+    color: #fff;
+    width: 220px;
+    border-radius: 50px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#portal-selection button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Login forms */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fafafa;
+    transition: all 0.3s ease-in-out;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #4CAF50;
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.2);
+}
+
+/* Buttons */
+button {
+    font-size: 16px;
+    padding: 12px 22px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Back Button */
+button#back-to-selection-teacher, button#back-to-selection-student,
+button#back-to-portal-selection-teacher, button#back-to-portal-selection-student {
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 16px;
+    margin-top: 15px;
+    padding: 12px 20px;
+}
+
+button#back-to-selection-teacher:hover, button#back-to-selection-student:hover,
+button#back-to-portal-selection-teacher:hover, button#back-to-portal-selection-student:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+/* Teacher Dashboard */
+#teacher-dashboard {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#teacher-dashboard h4 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Video List */
+#video-streams, #video-list {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+#video-streams div, #video-list div {
+    margin: 12px 0;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#video-streams div:hover, #video-list div:hover {
+    background-color: #eef2f7;
+}
+
+#video-streams div button, #video-list div button {
+    background-color: #2196F3;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+#video-streams div button:hover, #video-list div button:hover {
+    background-color: #1976D2;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    #portal-selection button,
+    button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h2 {
+        font-size: 28px;
+    }
+
+    #portal-selection button,
+    button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/* Video Controls and Styling */
+#video-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+#video-controls button,
+#video-controls select {
+    padding: 10px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#video-controls button:hover,
+#video-controls select:hover {
+    background-color: #45a049;
+}
+
+#progress-bar {
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Video Box */
+#video-box {
+    position: relative;
+}
+
+#video-container {
+    width: 100%;
+    height: 315px;
+    background-color: black;
+}
+
+#video-container iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* Disable Direct Touch Interaction on Video */
+#video-container iframe {
+    pointer-events: none; /* Disable touch events on the iframe */
+}
+
+</style>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher & Student Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Portal Selection -->
+<div id="portal-selection">
+    <h2>Select Your Role</h2>
+    <button id="teacher-btn">Teacher</button>
+    <button id="student-btn">Student</button>
+</div>
+
+<!-- Teacher Login -->
+<div id="teacher-login" style="display: none;">
+    <h3>Teacher Login</h3>
+    <input type="text" id="teacher-username" placeholder="Username">
+    <input type="password" id="teacher-password" placeholder="Password">
+    <button id="teacher-login-btn">Login</button>
+    <button id="back-to-selection-teacher">Back</button>
+</div>
+
+<!-- Student Login -->
+<div id="student-login" style="display: none;">
+    <h3>Student Login</h3>
+    <input type="text" id="student-username" placeholder="Username">
+    <input type="password" id="student-password" placeholder="Password">
+    <button id="student-login-btn">Login</button>
+    <button id="back-to-selection-student">Back</button>
+</div>
+
+<!-- Teacher Dashboard -->
+<div id="teacher-dashboard" style="display: none;">
+    <h3>Teacher Dashboard</h3>
+    <h4>Add Video</h4>
+    <input type="text" id="video-name-input" placeholder="Video Name">
+    <input type="text" id="video-url-input" placeholder="Video URL">
+    <button id="add-video-btn">Add Video</button>
+
+    <h4>Manage Students</h4>
+    <input type="text" id="student-name-input" placeholder="Student Name">
+    <input type="password" id="student-password-input" placeholder="Student Password">
+    <button id="add-student-btn">Add Student</button>
+
+    <h4>Video List</h4>
+    <div id="video-list"></div>
+
+    <h4>Student List</h4>
+    <div id="student-list"></div>
+
+    <button id="back-to-portal-selection-teacher">Back to Portal Selection</button>
+</div>
+
+<!-- Student Dashboard -->
+<div id="student-dashboard" style="display: none;">
+    <h3>Student Dashboard</h3>
+    <h4>Your Videos</h4>
+    <div id="video-streams"></div>
+    <button id="back-to-portal-selection-student">Back to Portal Selection</button>
+</div>
+
+<!-- Video Box in Student Dashboard -->
+<div id="video-box" style="display: none;">
+    <div id="video-container"></div>
+
+    <!-- Video Controls -->
+    <div id="video-controls">
+        <button id="play-pause-btn">Play</button>
+        <button id="skip-backward-btn">-10s</button>
+        <button id="skip-forward-btn">+10s</button>
+        
+        <label for="speed-control">Speed:</label>
+        <select id="speed-control">
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+        </select>
+        
+        <button id="fullscreen-btn">Full-Screen</button>
+    </div>
+
+    <!-- Video Progress Bar -->
+    <input type="range" id="progress-bar" value="0" step="1" max="100" />
+</div>
+
+<script>
+	// Store data in session for the current session (temporary persistence)
+let videoData = JSON.parse(localStorage.getItem("videoData")) || [];
+let studentData = JSON.parse(localStorage.getItem("studentData")) || [];
+
+document.getElementById("teacher-btn").addEventListener("click", function () {
+    document.getElementById("portal-selection").style.display = "none";
+    document.getElementById("teacher-login").style.display = "block";
+});
+
+document.getElementById("student-btn").addEventListener("click", function () {
+    document.getElementById("portal-selection").style.display = "none";
+    document.getElementById("student-login").style.display = "block";
+});
+
+// Teacher Login
+document.getElementById("teacher-login-btn").addEventListener("click", function () {
+    const username = document.getElementById("teacher-username").value;
+    const password = document.getElementById("teacher-password").value;
+
+    // Correct teacher credentials
+    if (username === "teacher" && password === "teacher123") {
+        document.getElementById("teacher-login").style.display = "none";
+        document.getElementById("teacher-dashboard").style.display = "block";
+    } else {
+        alert("Incorrect username or password");
+    }
+});
+
+// Student Login
+document.getElementById("student-login-btn").addEventListener("click", function () {
+    const username = document.getElementById("student-username").value;
+    const password = document.getElementById("student-password").value;
+
+    const student = studentData.find(s => s.username === username && s.password === password);
+
+    if (student) {
+        document.getElementById("student-login").style.display = "none";
+        document.getElementById("student-dashboard").style.display = "block";
+        loadStudentVideos();  // Load the videos for the student
+    } else {
+        alert("Incorrect username or password");
+    }
+});
+
+// Add Video
+document.getElementById("add-video-btn").addEventListener("click", function () {
+    const videoName = document.getElementById("video-name-input").value;
+    const videoUrl = document.getElementById("video-url-input").value;
+
+    if (videoName && videoUrl) {
+        videoData.push({ name: videoName, url: videoUrl });
+        localStorage.setItem("videoData", JSON.stringify(videoData));
+
+        displayVideoList();
+        document.getElementById("video-name-input").value = "";
+        document.getElementById("video-url-input").value = "";
+    } else {
+        alert("Please enter both video name and URL");
+    }
+});
+
+// Display Video List for Teacher
+function displayVideoList() {
+    const videoList = document.getElementById("video-list");
+    videoList.innerHTML = '';
+    videoData.forEach(video => {
+        const videoItem = document.createElement("div");
+        videoItem.innerHTML = `
+            <p>${video.name}</p>
+            <button class="play-video-btn" data-url="${video.url}">Play</button>
+            <button class="remove-video-btn">Remove</button>
+        `;
+        videoList.appendChild(videoItem);
+    });
+}
+
+// Remove Video
+document.getElementById("video-list").addEventListener("click", function (event) {
+    if (event.target.classList.contains("remove-video-btn")) {
+        const videoItem = event.target.parentElement;
+        const videoName = videoItem.querySelector('p').textContent;
+        videoData = videoData.filter(video => video.name !== videoName);
+        localStorage.setItem("videoData", JSON.stringify(videoData));
+
+        displayVideoList();
+    }
+});
+
+// Play Video
+document.getElementById("video-list").addEventListener("click", function (event) {
+    if (event.target.classList.contains("play-video-btn")) {
+        const videoUrl = event.target.getAttribute("data-url");
+        window.open(videoUrl, "_blank");
+    }
+});
+
+// Add Student
+document.getElementById("add-student-btn").addEventListener("click", function () {
+    const studentName = document.getElementById("student-name-input").value;
+    const studentPassword = document.getElementById("student-password-input").value;
+
+    if (studentName && studentPassword) {
+        const student = {
+            username: studentName,
+            password: studentPassword
+        };
+        studentData.push(student);
+        localStorage.setItem("studentData", JSON.stringify(studentData));
+
+        const studentList = document.getElementById("student-list");
+        const studentItem = document.createElement("div");
+        studentItem.innerHTML = `
+            <p>${student.username}</p>
+            <button class="remove-student-btn">Remove</button>
+        `;
+        studentList.appendChild(studentItem);
+
+        document.getElementById("student-name-input").value = "";
+        document.getElementById("student-password-input").value = "";
+    } else {
+        alert("Please enter both student name and password");
+    }
+});
+
+// Remove Student
+document.getElementById("student-list").addEventListener("click", function (event) {
+    if (event.target.classList.contains("remove-student-btn")) {
+        const studentItem = event.target.parentElement;
+        const studentName = studentItem.querySelector('p').textContent;
+        studentData = studentData.filter(student => student.username !== studentName);
+        localStorage.setItem("studentData", JSON.stringify(studentData));
+
+        studentItem.remove();
+    }
+});
+
+// Load videos for Student
+function loadStudentVideos() {
+    const videoStreams = document.getElementById("video-streams");
+    videoStreams.innerHTML = '';
+    videoData.forEach(video => {
+        const videoItem = document.createElement("div");
+        videoItem.innerHTML = `
+            <p>${video.name}</p>
+            <button class="play-video-btn" data-url="${video.url}">Play</button>
+        `;
+        videoStreams.appendChild(videoItem);
+    });
+}
+
+// Back to Portal Selection (Teacher Dashboard)
+document.getElementById("back-to-portal-selection-teacher").addEventListener("click", function () {
+    document.getElementById("teacher-dashboard").style.display = "none";
+    document.getElementById("portal-selection").style.display = "block";
+});
+
+// Back to Portal Selection (Student Dashboard)
+document.getElementById("back-to-portal-selection-student").addEventListener("click", function () {
+    document.getElementById("student-dashboard").style.display = "none";
+    document.getElementById("portal-selection").style.display = "block";
+});
+// Ensure student can see the videos after login
+function loadStudentVideos() {
+    const videoStreams = document.getElementById("video-streams");
+    videoStreams.innerHTML = ''; // Clear existing videos
+    
+    // Load videos from localStorage
+    const videos = JSON.parse(localStorage.getItem("videoData")) || [];
+    
+    // Add each video to the student dashboard
+    videos.forEach(video => {
+        const videoItem = document.createElement("div");
+        videoItem.innerHTML = `
+            <p>${video.name}</p>
+            <button class="play-video-btn" data-url="${video.url}">Play</button>
+        `;
+        videoStreams.appendChild(videoItem);
+    });
+
+    // Add event listener for playing videos in the student dashboard
+    videoStreams.addEventListener("click", function (event) {
+        if (event.target.classList.contains("play-video-btn")) {
+            const videoUrl = event.target.getAttribute("data-url");
+            window.open(videoUrl, "_blank"); // Open video in a new tab
+        }
+    });
+}
+
+// After successful student login, call loadStudentVideos to display the videos
+document.getElementById("student-login-btn").addEventListener("click", function () {
+    const username = document.getElementById("student-username").value;
+    const password = document.getElementById("student-password").value;
+
+    const student = studentData.find(s => s.username === username && s.password === password);
+
+    if (student) {
+        document.getElementById("student-login").style.display = "none";
+        document.getElementById("student-dashboard").style.display = "block";
+        loadStudentVideos();  // Load videos for the student
+    } else {
+        alert("Incorrect username or password");
+    }
+});
+// Load video in student portal (either iframe or video tag)
+function loadStudentVideo(videoUrl) {
+    if (!videoUrl) {
+        console.error("Invalid video URL");
+        return;
+    }
+
+    const videoBox = document.getElementById("video-box");
+    const videoContainer = document.getElementById("video-container");
+    const playPauseBtn = document.getElementById("play-pause-btn");
+    const speedControl = document.getElementById("speed-control");
+
+    // Clear the video container
+    videoContainer.innerHTML = '';
+
+    // Check if the video URL is a YouTube or Vimeo embed URL
+    if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+        try {
+            // YouTube embed URL
+            const videoId = getYouTubeVideoId(videoUrl); // Get video ID from YouTube URL
+            if (!videoId) {
+                console.error("Invalid YouTube video URL");
+                return;
+            }
+            const iframe = document.createElement("iframe");
+            iframe.src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1`;
+            iframe.width = "100%";
+            iframe.height = "315";
+            iframe.frameBorder = "0";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+            videoContainer.appendChild(iframe);
+
+            // Play/Pause functionality using the YouTube API
+            let player;
+            iframe.onload = function() {
+                player = new YT.Player(iframe, {
+                    events: {
+                        'onReady': function(event) {
+                            playPauseBtn.addEventListener("click", function() {
+                                if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                                    player.pauseVideo();
+                                    playPauseBtn.textContent = "Play";
+                                } else {
+                                    player.playVideo();
+                                    playPauseBtn.textContent = "Pause";
+                                }
+                            });
+                        }
+                    }
+                });
+            };
+        } catch (error) {
+            console.error("Error loading YouTube video: ", error);
+        }
+    } else if (videoUrl.includes("vimeo.com")) {
+        try {
+            // Vimeo embed URL
+            const videoId = getVimeoVideoId(videoUrl); // Get Vimeo video ID
+            if (!videoId) {
+                console.error("Invalid Vimeo video URL");
+                return;
+            }
+            const iframe = document.createElement("iframe");
+            iframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+            iframe.width = "100%";
+            iframe.height = "315";
+            iframe.frameBorder = "0";
+            iframe.allow = "autoplay; fullscreen";
+            iframe.allowFullscreen = true;
+            videoContainer.appendChild(iframe);
+
+            // Play/Pause functionality using the Vimeo API
+            const vimeoPlayer = new Vimeo.Player(iframe);
+            playPauseBtn.addEventListener("click", function() {
+                vimeoPlayer.getPaused().then(function(paused) {
+                    if (paused) {
+                        vimeoPlayer.play();
+                        playPauseBtn.textContent = "Pause";
+                    } else {
+                        vimeoPlayer.pause();
+                        playPauseBtn.textContent = "Play";
+                    }
+                });
+            });
+        } catch (error) {
+            console.error("Error loading Vimeo video: ", error);
+        }
+    } else {
+        // Regular video file (mp4 or other formats)
+        const video = document.createElement("video");
+        video.id = "student-video";
+        video.width = "100%";
+        video.controls = false; // Disable default controls
+
+        const source = document.createElement("source");
+        source.src = videoUrl;
+        source.type = "video/mp4";
+        video.appendChild(source);
+
+        videoContainer.appendChild(video);
+        video.load(); // Load the video
+
+        // Handle Play/Pause button for regular video
+        playPauseBtn.addEventListener("click", function() {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.textContent = "Pause";
+            } else {
+                video.pause();
+                playPauseBtn.textContent = "Play";
+            }
+        });
+
+        // Speed control for regular video
+        speedControl.addEventListener("change", function() {
+            video.playbackRate = parseFloat(speedControl.value);
+        });
+    }
+
+    videoBox.style.display = "block"; // Show the video box
+}
+
+// Function to extract YouTube video ID from the URL
+function getYouTubeVideoId(url) {
+    const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+}
+
+// Function to extract Vimeo video ID from the URL
+function getVimeoVideoId(url) {
+    const regex = /vimeo\.com\/(\d+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+}
+
+// Handle student login and display videos
+document.getElementById("student-login-btn").addEventListener("click", function () {
+    const username = document.getElementById("student-username").value;
+    const password = document.getElementById("student-password").value;
+
+    const student = studentData.find(s => s.username === username && s.password === password);
+
+    if (student) {
+        document.getElementById("student-login").style.display = "none";
+        document.getElementById("student-dashboard").style.display = "block";
+        loadStudentVideos(); // Load videos after login
+    } else {
+        alert("Incorrect username or password");
+    }
+});
+
+// Load the video data (can be fetched from database or stored in localStorage)
+function loadStudentVideos() {
+    const videoStreams = document.getElementById("video-streams");
+    videoStreams.innerHTML = ''; // Clear existing videos
+    
+    const videos = JSON.parse(localStorage.getItem("videoData")) || [];
+    
+    videos.forEach(video => {
+        const videoItem = document.createElement("div");
+        videoItem.innerHTML = `
+            <p>${video.name}</p>
+            <button class="play-video-btn" data-url="${video.url}">Play</button>
+        `;
+        videoStreams.appendChild(videoItem);
+
+        // Add event listener to play the video when clicked
+        videoItem.querySelector(".play-video-btn").addEventListener("click", function () {
+            loadStudentVideo(video.url); // Load and play the video
+        });
+    });
+}
+
+</script>
+</body>
+</html>
